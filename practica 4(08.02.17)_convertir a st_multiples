@@ -1,0 +1,40 @@
+###1.SIMULACION DE SERIES DE TIEMPO
+
+##__SIMULAR UN INDICADOR
+##__NECESITAMOS INFORMACION, VALOR MAXIMO ,VALOR MINIMO, NUM DE DATOS.
+##__EN ESTE EJEMPLO VAMOS A PROPONER POBLACIÓN DE MÉXICO
+##__VALOR MIN 100
+##__VALOR MAX 120
+
+require(foreign)
+pob<-sample(100:120,15,replace=F)##sin remplazo
+
+##__La convertimos en serie de tiempo
+pobts<-ts(pob,frequency = 1,start=(2000))##para que la reconozca como serie de tiempo 
+                                        #ts<- (base,frecuencia=anual, empieza en año 2000)
+end(pobts)##Nos dice cuando termina mi base
+          #start=2000   end=2014
+plot(pobts)
+plot(aggregate(pobts))
+
+
+
+####Bajar del INEGI la ocupación de 
+infor<-ts(read.csv(("C:\\Users\\ACER\\Downloads\\enoe.csv")))
+infor<-ts(read.csv(("C:\\Users\\ACER\\Downloads\\enoe.csv")),frequency=4,start = 2005)
+infor
+
+#________________________________________________________________________________________________________________________________
+####DESCARGAR 4 SERIES DE TIEMPO 
+bases<-read.csv(("C:\\Users\\ACER\\Downloads\\ENOEVARIAS.csv"))
+basest<-ts(bases,frequency = 4,start=2005)
+
+##separar las bases
+desocupa<-ts(bases[,1],start = 2005,frequency = 4)##[renglon, columna]
+desocupa
+ocuparcial<-ts(bases[,2],start = 2005,frequency = 4)##[renglon, columna]
+ocuparcial
+asalariado<-ts(bases[,3],start = 2005,frequency = 4)##[renglon, columna]
+asalariado
+condcrit<-ts(bases[,4],start = 2005,frequency = 4)##[renglon, columna]
+condcrit
