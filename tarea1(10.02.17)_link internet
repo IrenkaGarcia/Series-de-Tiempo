@@ -1,0 +1,16 @@
+require(foreign)
+
+
+temporal<- tempfile()
+download.file("http://www3.inegi.org.mx/sistemas/infoenoe/Default_15mas.aspx?s=est&c=26227&p=",temporal)
+files=unzip(temporal,list=TRUE)$Name
+unzip(temporal,files=files[grepl("xls",files)])
+ENILEMS<-data.frame(read.csv("IndicadoresENOE_2017-02-09 (6).xls"))
+
+install.packages("questionr")
+require(quesionr)
+setwd("C:\\Users\\ACER\\Desktop\\datosenoe.html")
+SDEMT215<-data.frame(read.dbf("SDEMT215.dbf")))
+
+Web <- "http://www3.inegi.org.mx/sistemas/infoenoe/Default_15mas.aspx?s=est&c=26227&p="
+datosWeb1 <- read.table(Web)
