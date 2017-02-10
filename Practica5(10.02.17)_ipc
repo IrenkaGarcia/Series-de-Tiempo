@@ -1,0 +1,72 @@
+###                                 ***PRACTICA 5***
+
+#1.- Buscar en INEGI los indicadores
+#2.- Bajar la serie de tiempo
+#3.- Ubicar la ruta de la st en la computadora
+#4.-Importar en R el archivo.csv
+#5.-Reconocer el archivo como serie de tiempo
+
+#gENERAR 4 objetos aleatorios y que tengasn 60 datos
+#objeto1.-de numero de profesionista rango de 5 a 8
+#objeto2.-crecimiento pib  rango de 0 a 5
+#objeto3.-porcentaje de ocupados rango 40 a 60
+#objeto4.- porcentaje de desocupados rango de 3 a 8
+obj1<- sample(5:8,60, replace=TRUE)
+obj2<-sample(0:5,60, replace=TRUE)
+obj3<-sample(40:60,60,replace = TRUE)
+obj4<-sample(3:8,60,replace = TRUE)
+obj1
+obj2
+obj3
+obj4
+
+#1.- una vez que generen los datos hacer un data frame de los 4 objetos
+conjun<-data.frame(obj1,obj2,obj3,obj4)
+
+#2.-mostrar en consola los primeros 12 y ultimos 12 datos
+p12<-conjun[1:12,]#[renglones,columnas]
+u12<-conjun[49:60,]
+
+#3.-convertir los objetos en series de tiempo 
+obj1st<-ts(obj1,frequency = 12,start=(2010))
+obj2st<-ts(obj2,frequency = 12,start=(2010))
+obj3st<-ts(obj3,frequency = 12,start=(2010))
+obj4st<-ts(obj4,frequency = 12,start=(2010))
+end(obj1st)
+
+#4.-graficar los profesionistas y ocupados en la misma
+plot(cbind(obj1st,obj3st))##cbind combina graficas 
+     
+#5.-graficar pib y desocupados
+plot(cbind(obj2st,obj4st))
+
+#6.-graficar todas juntas
+plot(cbind(obj1st,obj2st,obj3st,obj4st))
+#persp:graficas en 3d
+plot.ts (conjun[,c(1,3)],pch=01,col=2,type="b")
+
+conjunst<-ts.intersect(conjun)
+
+
+####BAjar una st de datos del PIBen México de 1980 a 2015
+#crear 4 series de tiempo: 
+#1980-1990
+#1991-2000
+#2001-2010
+#2011-2015
+#graficar en una imagen la st 2 y 3
+
+pib<-ts(read.csv(("C:\\Users\\ACER\\Downloads\\pib.csv")))
+#pibst<-ts(read.csv(("C:\\Users\\ACER\\Downloads\\pib.csv")),frequency=1,start = 1980)
+pib
+obj1st<-ts(pib[1:11,-1])##[renglon, columna]
+obj1st
+obj2st<-ts(pib[12:21,-1])##[renglon, columna]
+obj2st
+obj3st<-ts(pib[22:31,-1])##[renglon, columna]
+obj3st
+obj4st<-ts(pib[32:36,-1])##[renglon, columna]
+obj4st
+
+#Graficar
+plot(cbind(obj2st,obj3st))
