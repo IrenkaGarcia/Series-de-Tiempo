@@ -1,0 +1,39 @@
+##
+require(foreign)
+##Para descomponer una serie de tiempo graficamente se utiliza la funcion: decompose
+#primero es importante reconocer la st y despues aplicar la función
+desoc<-sample(3:8,44,replace=TRUE)
+tdesoc<-ts(desoc,frequency=4,start=2005)
+plot(decompose(tdesoc))
+#_________________________base Leslie________________________________
+tiie<-read.csv(("C:\\Users\\ACER\\Downloads\\TIIE2015.csv"))
+sttiie<-ts(tiie,frequency=52,start=2005)
+plot(sttiie)
+plot(decompose(sttiie))
+#_________________________base GAby_________________________
+pib<-read.csv(("C:\\Users\\ACER\\Downloads\\PIB México.csv"))
+pibst<-ts(pib,frequency=4,start=2007)
+plot(pibst)
+plot(decompose(pibst))
+View(pibst)
+summary(pibst)
+
+depibst<-decompose(pibst)
+names(depibst)
+depibst$trend###imprime los datos que grafica
+depibst$seasonal
+
+#___________________________base Marko___________________
+###serie consumo de bienes y servicos
+###k 9:43
+require(questionr)
+bienes<-read.csv(("C:\\Users\\ACER\\Downloads\\markosu.csv"))
+bienesl<-ts(bienes [9:43,11],frequency = 1,start=2014)
+bienesl
+plot(bienesl)
+plot(decompose(bienesl))
+
+bie<-decompose(bienesl)
+names(bienesl)
+bienesl$trend###imprime los datos que grafica
+bienesl$seasonal
