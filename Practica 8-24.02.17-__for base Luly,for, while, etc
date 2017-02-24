@@ -1,0 +1,107 @@
+require(foreign)
+
+#des<-read.csv(file.choose())###abre la ventana para seleccionar el archivo
+base<-read.csv("C:\\Users\\Sala-D\\Downloads\\tarea2.csv")
+basest<-ts(base,frequency=4,start=2005)
+decompose(basest)
+vector<-1:45
+for(i in 1:45){
+  vector[i]<-(basest[i,1]+basest[i+2,1]+basest[i+3,1])/4
+}
+length(vector)
+vector
+
+vector2<-1:44
+for(i in 1:44){
+  vector2[i]<-(vector[i]+vector[i+1])/2
+  
+}
+
+vector2
+
+yt<-1:44
+for(i in 1:44){
+  yt[i]<-basest[i+2,1]-vector2[i]
+}
+yt
+length(yt)
+####Para modelo aditivo
+est<-matrix(1:48,nrow=4)
+est
+k=1
+i=1
+for(c in 1:12){
+  for(f in 1:4){
+    if(k<=2|k>=47){ #|="o"
+      est[f,c]=0
+    }
+    else{
+      est[f,c]=yt[i]
+      i=i+1
+    }
+    k=k+1
+  }
+}
+est
+v<-matrix(1:4,nrow=4)
+v[1,1]<-mean(est[1,2:12])
+v[2,1]<-mean(est[2,2:12])
+v[3,1]<-mean(est[3,1:12])
+v[4,1]<-mean(est[4,1:12])
+
+tabla<-cbind(est,v)
+iveglobal<-mean(tabla[,13])
+iveglobal
+tabla2<-cbind(est,v,v-iveglobal)
+##dimnames(tabla2)<-list("trim 1","2","3","4"),c(2007:2018,"ive","ivecorregido")
+
+######
+
+
+y<-apply(basest,1,sum)
+y
+length(y)
+#_______________________________**FOR**_________________________________
+u1<-(1:48)
+u2<-0
+for(i in 1:48){
+  u1[]<-y[i]+2
+print(y[i])
+}
+
+
+#_______________________________**WHILE**_________________________________
+s<-7
+while(s<6) {s<-s*2;print(s);}
+
+s<-1
+while(s<5) {s<-s+1;;if(s==4) break;print(s);}
+####cuando aparezca el 4 se detiene
+
+s<-1
+while(s<5) {s<-0+1;;if(s==2) break;print(s);}
+##no se detiene porque nunca va a encontar el 2
+
+s<-1
+while(s<3) {s<-s+1;;if(s==2) next;print(s);}
+
+###______________graficas tendencia________________
+
+detsdes<-decompose(basest)
+
+detsdes$seasonal
+plot(basest,col=3,main="tasa de desocupacion trimestral",ylab="tasas",xlab="años")
+lines(detsdes$trend,col=2, ylab="tendencia")
+
+
+###________________estacionariedad_________
+monthplot(detsdes$seasonal,main="IVEc",ylab="ivec trimestral")
+###de mi serie descompuesta lo que tengan estacionariedad
+detsdes$seasonal
+
+#tarea descomponer una serie tipo multiplicativo
+##detsdes<-decompose(basest,type="multiplicative")
+##1.-encontrar una st multiplicativa
+##la estacionariedad tambien se incremente 
+##2.- aplicar modelo multiplicativo
+##3.- graficar tendencia
