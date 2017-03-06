@@ -1,0 +1,27 @@
+##pero impredecible a largo plazo
+install.packages("fpp")
+require(fpp)
+plot(window(elec,start=1980),ylab="GWh",xlab="YEAR",main="Australian electricity production")
+
+#esta tendencia y ciclico
+seasonplot(bricksq,ylab="million units",xlab="year",main="Electricidad",col=rainbow(20),year.labels.left = TRUE,pch=10 )
+bricksq==esta trimestralmente
+seasonplot(bricksq,s=4,year.labels=TRUE,main="sales of new one-family houses",col=rainbow(20),year.labels.left = TRUE,pch=10 )
+bricksq
+#estacionariedad,tendencia  y ciclico no mucho tendencia
+plot(hsales,main="Sales of new one family houses, USA",ylab="Total sales",xlab="Year")
+#no estacionariedad ni tendencia,posible ciclo
+seasonplot(hsales,s=12,year.labels=TRUE,main="valores acciones ICA",ylab="valor cierre",col=rainbow(20),year.labels.left = TRUE,pch=20 )
+
+
+dec<-decompose(bricksq)
+
+##eliminando tendencia
+sinesta<-bricksq-dec$seasonal
+sintend<-bricksq-dec$trend
+plot(sinesta)
+plot(sintend)
+
+###EJERCICIO
+##analizar porcentaje del pib anual 1960-2015
+##año que nos toca 90-99
