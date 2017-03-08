@@ -1,0 +1,37 @@
+##_____________________________________**PRACTICA 10**_____________________________________________
+
+
+###multiplicativo
+##estos modelos son apropiados cuando la magnitud de las fluctuaciones estacionales 
+##ahora como vimos hay dos modelos que s epueden descomponer
+##1).-modelo aditivo____xt=mt+st+zt
+##2.-modelo multiplicativo___xt=mt*st*zt
+##para descomponer una st de manera aditiva es con la funcion decompose
+
+##de modelo multiplicativo es
+deso<-data.frame(read.csv("C:\\Users\\Sala-D\\Downloads\\tarea2.csv"))
+desot<-ts(deso,frequency = 4,start=2005)
+dectsd<-decompose(desot)##descomposicion pormodleo aditivo
+plot(dectsd)
+dectsmul<-decompose(desot,type="mult")##descomposicion por modelo multiplicativo
+plot(dectsmul)
+
+##desestacionalizar una serie se hace por diferentes razones
+#predecir nuestros datos con mayor precision y sin contar con factores externos al comportamiento de
+#nuestros datos, hay dos formas de hacerlo:
+#1.-con funcion "seasadj" de la paqueteria "fpp"
+#2.-la forma manual
+
+#con funcion
+require(fpp)
+eeadj<-seasadj(dectsd)
+eeadj
+
+#forma manual
+sinesta<-desot- dectsd$seasonal
+sinesta
+eeadj-sinesta###debe dar una matriz de 0´s
+
+
+##____**CORRELACION Y COVARIANZA**____
+#Covarianza y Correlación: medida del grado
