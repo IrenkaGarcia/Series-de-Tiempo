@@ -1,0 +1,12 @@
+pib<- read.csv("C:\\Users\\ACER\\Desktop\\pib.anual.csv")
+pib
+pib90<-ts(pib[30:39,],start = 1961,frequency = 1)##[renglon, columna]
+pib90
+pib90st<-ts(pib90,frequency=1,start=1990)
+plot(pib90st, main="Pib del 90 al 99", ylab= "porcentaje anual", xlab="años", col="darkblue", pch=9)
+pib90st
+install.packages("fpp")
+require(fpp)
+seasonplot(pib90st, year.labels=TRUE, main="", col=rainbow(20), year.labels.left = TRUE,pch=15)
+seasonplot(pib90st, year.labels=TRUE,main="porcentaje del pib",ylab="porcentaje anual",col=rainbow(20),year.labels.left = TRUE,pch=20 )
+
