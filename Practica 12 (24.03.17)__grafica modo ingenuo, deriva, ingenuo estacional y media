@@ -1,0 +1,73 @@
+##_______________________________**CORRELOGRAMA PIB**_________________________________________
+
+pib<-(read.csv("C:\\Users\\Sala-D\\Downloads\\pibanual.csv"))
+pibst<-ts(pib,frequency=1,start=1961)
+pibst
+acf(pibst)
+##_______________________________**CORRELOGRAMA DESOCUPACIÓN**_________________________________________
+deso<-(read.csv("C:\\Users\\Sala-D\\Downloads\\tarea2.csv"))
+ddesost<-ts(deso)
+acf(ddesost)
+
+###TAREA BUSCAR UNA ST DE MÉXICO EN DONDE CON EL CORRELOGRAMA DETERMINEN QUE TIENE RUIDO BLANCO
+##OTRA ST DONDE MUESTRE EL CORRELOGRAMA EXPONGA QUE LA ST TIENE CAMINATA ALEATORIA
+
+
+
+####_______________________________**MODELOS LINEALES PARA PRONOSTICAR**_________________________________________
+#Son la aplicación de pronosticos lineales como el ingenuo, promedio, ingenuo estacional
+#y el de deriva
+#El ingenuo pronostico esta basado en la ultima observacion que arroja la serie de tiempo. es decir, 
+#este pronostico asume uqe la observacion mas importante es la ultima
+
+###LA FUNCION EN R ES naive(serie, h=numero de pronostico)
+
+install.packages("forecast")
+require(forecast)
+naive(pibst,h=4)
+
+
+###___Metodo promedio
+##ESte metodo le da el mismo peso a todos los datos u observaciones, es decir, se asume con este metodo que todas
+#las observaciones tienen la misma importancia por lo que el pronostico es un promedio de todas las 
+#observaciones
+
+#funcion para R es meanf(serie, h=num de pronostico)
+meanf(ddesost,h=4)
+plot(meanf(ddesost,h=4))
+
+
+##___Metodo Ingenuo estacional
+##se utiliza en ST con alta estacionalidad, este pronostico consiste en darle el mayor peso o 
+#la mayor ponderación al dato del mismo periodo
+#en el año anterior por ejemplo trimestre 2 del año 2005 es igual al 2 trimestre año 2006
+
+#LA FUNCION PARA R ES snaive()
+snaive(ddesost,h=4)
+
+###Metodo de la deriva
+
+##Consiste en que el pronostico puede incrementar o reducirse dependiendo del 
+##promedio de los cambios historicos de la ST
+
+##Funcion en r rwf(serie,h=num de pronostico, drift=TRUE)
+rwf(ddesost,h=4, drift=TRUE)
+
+
+desocmod1<-meanf(ddesost,h=10)
+desocmod2<-naive(ddesost,h=10)
+desocmod3<-snaive(ddesost,h=10)
+desocmod4<-rwf(ddesost,h=10)
+
+x11()##abrir una ventana
+plot(desocmod1,main="Forecastfor quarterly beer production")
+lines(desocmod2$fitted,col="blue")
+lines(desocmod3$fitted,col="pink")
+lines(desocmod4$fitted,col="green")
+legend("topleft",lty=1,col=c("blue","pink","green"), legend=c("media","ingenuo","ingenuo estacional","deriva"))
+
+names(desocmod2)
+
+desocmod1$
+###cortar una st de 2005 a 2010 y obtener los reales de los sig años
+  ###compararar los resultados con los reales
