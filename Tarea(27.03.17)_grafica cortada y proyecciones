@@ -1,0 +1,47 @@
+###cortar una st de 2005 a 2010 y obtener los reales de los sig años
+
+###compararar los resultados con los reales
+deso<-(read.csv("C:\\Users\\Sala-D\\Downloads\\tarea2.csv"))
+desos<-ts(deso,frequency = 4,start=2005)
+desoc<-deso[1:24,]
+desoc
+desot<-ts(desoc,frequency = 4,start=2005)
+desot
+####Proyecciones 
+require(forecast)
+naive(desot,h=20)
+plot(naive(desot,h=20))
+
+meanf(desot,h=20)
+plot(meanf(desot,h=20))
+
+
+snaive(desot,h=20)
+plot(snaive(desot,h=20))
+
+rwf(desot,h=20, drift=TRUE)
+plot(rwf(desot,h=20, drift=TRUE))
+
+
+desocmod1<-meanf(desot,h=)
+desocmod2<-naive(desot,h=20)
+desocmod3<-snaive(desot,h=20)
+desocmod4<-rwf(desot,h=20)
+
+x11()##abrir una ventana
+plot(desocmod1,main="Forecastfor quarterly beer production")
+lines(desocmod2$mean,col="blue")
+lines(desocmod3$mean,col="pink")
+lines(desocmod4$mean,col="green")
+legend("topleft",lty=1,col=c("blue","pink","green","red"), legend=c("media","ingenuo","ingenuo estacional","deriva"))
+
+names(desocmod3)
+
+###graficar reales
+x11()##abrir una ventana
+plot(desos,main="Desocupacion")
+lines(desocmod1$mean,col="red")
+lines(desocmod2$mean,col="blue")
+lines(desocmod3$mean,col="pink")
+lines(desocmod4$mean,col="green")
+legend("topleft",lty=1,col=c("red","blue","pink","green"), legend=c("media","ingenuo","ingenuo estacional","deriva"))
