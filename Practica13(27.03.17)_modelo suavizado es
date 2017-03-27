@@ -1,0 +1,34 @@
+##Script clase
+asa<-(read.csv("C:\\Users\\Sala-D\\Downloads\\IndicadoresENOE_2017-03-27.csv"))
+###metodo GAby
+asa1<-data.frame(read.csv("C:\\Users\\Sala-D\\Downloads\\IndicadoresENOE_2017-03-27.csv",header=T)[7,2:49])
+
+asat<-t(asa1)
+asan<-as.numeric(asat)
+
+asat1<-ts(asan,start=2005,frequency=4)
+asat1
+#para transponer solo poner la t
+
+###SUAVIZAR SES
+require(forecast)
+mod1<-ses(asat1,alpha=0.1,initial="simple",h=8)
+
+
+mod2<-ses(asat1,alpha=0.3,initial="simple",h=8)
+
+
+mod3<-ses(asat1,alpha=0.95,initial="simple",h=8)
+
+x11()
+plot(mod1,ylab="Asalariados",xlab="Años",main="Asalariados",type="o")
+
+lines(mod1$fitted,col="brown",type="o")
+lines(mod2$fitted,col="red",type="o")
+lines(mod3$fitted,col="green",type="o")
+
+lines(mod1$mean,col="brown",type="o")
+lines(mod2$mean,col="red",type="o")
+lines(mod3$mean,col="green",type="o")
+legend("topleft",lty=1,col=c(1,"blue","red","green"),c("data",expression(alpha==0.1),expression(alpha==0.3),expression(alpha==1),pch=11))
+
