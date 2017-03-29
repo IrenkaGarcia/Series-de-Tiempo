@@ -1,1 +1,47 @@
-#______________________________________**Practica 6**________________________________________obj1<- sample(5:8,60, replace=TRUE)obj2<-sample(0:5,60, replace=TRUE)obj3<-sample(40:60,60,replace = TRUE)obj4<-sample(3:8,60,replace = TRUE)obj1obj2obj3obj4#1.- una vez que generen los datos hacer un data frame de los 4 objetosconjun<-data.frame(obj1,obj2,obj3,obj4)#2.-mostrar en consola los primeros 12 y ultimos 12 datosp12<-conjun[1:12,]#[renglones,columnas]u12<-conjun[49:60,]#3.-convertir los objetos en series de tiempo obj1st<-ts(obj1,frequency = 12,start=(2010))obj2st<-ts(obj2,frequency = 12,start=(2010))obj3st<-ts(obj3,frequency = 12,start=(2010))obj4st<-ts(obj4,frequency = 12,start=(2010))end(obj1st)#### 33 series de tiempo multipleseriemultiple<-ts.intersect(obj3st,obj1st,obj2st,obj4st)##grafica de 4 variablesplot(seriemultiple,main="Serie de tiempo múltiple", xlab="Años",ylab="num de personas",pch=8,col=6,type="b")###cortar series de tiemposeriemultiple02.07<-window(seriemultiple,start=c(2010,1),end=c(2012,1))plot(seriemultiple02.07,main="Serie de tiempo múltiple cortada", xlab="Años",pch=8,col=6,type="b")##________________________________**ejercicio**___________________________________________________#obtener 4 series de tiempo cada quien elige con 30 datos#Las series de tiempo tienen que importen tienen que tener sustento para compararlas###Series de tiempo: INEGI, mortalidad por sexo área urbana y ruralbases<-read.csv(("C:\\Users\\ACER\\Downloads\\mortalidad.csv"))basest<-ts(bases,frequency = 1,start=1990)basest##separar las baseshomrural<-ts(bases[,1],start = 1990,frequency = 1)##[renglon, columna]homruralmujrural<-ts(bases[,2],start = 1990,frequency = 1)mujruralhomurb<-ts(bases[,3],start = 1990,frequency = 1)homurbmujurb<-ts(bases[,1],start = 1990,frequency = 1)mujurb###Graficar la st multipleplot(basest,main="Serie de tiempo múltiple mortalidad", xlab="Años",pch=8,col=6,type="h")#Dividir la serie de tiempo en 3 periodosbasestst1<-ts(basest[1:10,],start=1990)st1plot(st1,main="1990-1999 mortalidad", xlab="Años",pch=05,col=2,type="b")st2<-ts(basest[11:20,],start=2000)st2plot(st2,main="2000-2009 mortalidad", xlab="Años",pch=15,col=3,type="o")st3<-ts(basest[21:26,],start=2010)st3plot(st3,main="2001 en adelante mortalidad", xlab="Años",pch=24,col=12,type="b")####como graficar una serie de tiempo multiple con diferentes coloresplot.ts(basest,col=c(01,10,04,06),type="s",plot.type = "single")
+#______________________________________**Practica 6**________________________________________obj1<- sample(5:8,60, replace=TRUE)obj2<-sample(0:5,60, replace=TRUE)
+obj3<-sample(40:60,60,replace = TRUE)
+obj4<-sample(3:8,60,replace = TRUE)
+obj1
+obj2
+obj3
+obj4
+#1.- una vez que generen los datos hacer un data frame de los 4 objetos
+conjun<-data.frame(obj1,obj2,obj3,obj4)
+#2.-mostrar en consola los primeros 12 y ultimos 12 datos
+p12<-conjun[1:12,]#[renglones,columnas]
+u12<-conjun[49:60,]
+#3.-convertir los objetos en series de tiempo 
+obj1st<-ts(obj1,frequency = 12,start=(2010))
+obj2st<-ts(obj2,frequency = 12,start=(2010))
+obj3st<-ts(obj3,frequency = 12,start=(2010))
+obj4st<-ts(obj4,frequency = 12,start=(2010))end(obj1st)
+#### 33 series de tiempo multiple
+seriemultiple<-ts.intersect(obj3st,obj1st,obj2st,obj4st)
+##grafica de 4 variables
+plot(seriemultiple,main="Serie de tiempo múltiple", xlab="Años",ylab="num de personas",pch=8,col=6,type="b")
+###cortar series de tiempo
+seriemultiple02.07<-window(seriemultiple,start=c(2010,1),end=c(2012,1))
+plot(seriemultiple02.07,main="Serie de tiempo múltiple cortada", xlab="Años",pch=8,col=6,type="b")
+##________________________________**ejercicio**___________________________________________________
+#obtener 4 series de tiempo cada quien elige con 30 datos
+#Las series de tiempo tienen que importen tienen que tener sustento para compararlas
+###Series de tiempo: INEGI, mortalidad por sexo área urbana y rural
+bases<-read.csv(("C:\\Users\\ACER\\Downloads\\mortalidad.csv"))
+basest<-ts(bases,frequency = 1,start=1990)
+basest
+##separar las bases
+homrural<-ts(bases[,1],start = 1990,frequency = 1)
+##[renglon, columna]homruralmujrural<-ts(bases[,2],start = 1990,frequency = 1)
+mujruralhomurb<-ts(bases[,3],start = 1990,frequency = 1)
+homurbmujurb<-ts(bases[,1],start = 1990,frequency = 1)
+mujurb
+###Graficar la st multiple
+plot(basest,main="Serie de tiempo múltiple mortalidad", xlab="Años",pch=8,col=6,type="h")
+#Dividir la serie de tiempo en 3 periodos
+basestst1<-ts(basest[1:10,],start=1990)
+st1
+plot(st1,main="1990-1999 mortalidad", xlab="Años",pch=05,col=2,type="b")
+st2<-ts(basest[11:20,],start=2000)st2plot(st2,main="2000-2009 mortalidad", xlab="Años",pch=15,col=3,type="o")
+st3<-ts(basest[21:26,],start=2010)st3plot(st3,main="2001 en adelante mortalidad", xlab="Años",pch=24,col=12,type="b")
+####como graficar una serie de tiempo multiple con diferentes colores
+plot.ts(basest,col=c(01,10,04,06),type="s",plot.type = "single")
