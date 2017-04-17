@@ -77,4 +77,4 @@ if(minr==rmse4) print("el modelo mas cercano es el 4 con alpha .8")
 ###
 x11()
 plot(tv,col=45,type = "s",ylab="precio",xlab="fecha",main="PRECIOS TV AZTECA")
-
+###se puede ver que nuestra grafica va ala alza y que no hay ciclicos
