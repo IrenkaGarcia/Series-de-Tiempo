@@ -1,0 +1,80 @@
+###ejercicio bajar acciones de TV AZTECA 2016 DIARIO
+require(foreign)
+install.packages("questionr")
+require(questionr)
+require(fpp)
+####
+#### BASE DE DATOS
+####
+tv<-as.numeric(ts(read.csv("C:\\Users\\Sala-D\\Downloads\\tvazteca.csv"),frequency = 261,start=2016))
+na.omit(tv)
+is.na(tv)
+tv
+mod1<-ses(tv,alpha=0.2,initial="simple",h=1)
+mod2<-ses(tv,alpha=0.4,initial="simple",h=1)
+mod3<-ses(tv,alpha=0.6,initial="simple",h=1)
+mod4<-ses(tv,alpha=0.8,initial="simple",h=1)
+
+####
+###GRAFICA
+####
+
+x11()
+plot(tv,ylab="precio",xlab="fecha",main="PRECIOS TV AZTECA",col="black",type="l")
+lines(fitted(mod1),col="brown",type="s")
+lines(fitted(mod2),col="red",type="p")
+lines(fitted(mod3),col="green",type="b")
+lines(fitted(mod4),col="blue",type="o")
+###en mi opinion el azul es el  de mejor ajuste
+
+
+###
+###MAE Y RMSE
+####
+m1<-tv-mod1$fitted
+m1
+mae1<-mean(abs(m1))####Mae
+rmse1<-sqrt(mean(m1^2))###RMSE
+
+m2<-tv-mod2$fitted
+m2
+mae2<-mean(abs(m2))####Mae
+rmse2<-sqrt(mean(m2^2))###RMSE
+
+m3<-tv-mod3$fitted
+m3
+mae3<-mean(abs(m3))####Mae
+rmse3<-sqrt(mean(m3^2))###RMSE
+
+m4<-tv-mod4$fitted
+m4
+mae4<-mean(abs(m4))####Mae
+rmse4<-sqrt(mean(m4^2))###RMSE
+
+
+MAE<-c(mae1,mae2,mae3,mae4)
+MAE
+minm<-min(MAE)
+
+if(minm==mae1) print("el modelo mas cercano es el 1 con alpha .2")
+if(minm==mae2) print("el modelo mas cercano es el 2 con alpha .4")
+if(minm==mae3) print("el modelo mas cercano es el 3 con alpha .6")
+if(minm==mae4) print("el modelo mas cercano es el 4 con alpha .8")
+
+RMSE<-c(rmse1,rmse2,rmse3,rmse4)
+RMSE
+minr<-min(RMSE)
+
+if(minr==rmse1) print("el modelo mas cercano es el 1 con alpha .2")
+if(minr==rmse2) print("el modelo mas cercano es el 2 con alpha .4")
+if(minr==rmse3) print("el modelo mas cercano es el 3 con alpha .6")
+if(minr==rmse4) print("el modelo mas cercano es el 4 con alpha .8")
+
+
+
+###
+###ESTACIONARIEDAD.TENDENCIA,ETC
+###
+x11()
+plot(tv,col=45,type = "s",ylab="precio",xlab="fecha",main="PRECIOS TV AZTECA")
+
