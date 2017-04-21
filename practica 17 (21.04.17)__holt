@@ -1,0 +1,24 @@
+require(foreign)
+require(fpp)
+dolar<-ts(read.csv("C:\\Users\\Sala-D\\Downloads\\dolar.csv"),frequency = 76,start=2017)
+plot(dolar)
+
+dolar1<-ts(dolar[1:50,1],start=2017,frequency=50)
+dolar2<-ts(dolar[50:76],start=2017,frequency=26)
+dolar1
+
+
+mod1<-holt(dolar1,initial="simple",h=27)
+plot(mod1$fitted)
+mod2<-holt(dolar1,initial="simple",exponential=TRUE,h=27)
+mod3<-holt(dolar1,damped = TRUE,h=27)
+mod4<-holt(dolar1,damped = TRUE,exponential=TRUE,h=27)
+
+x11()
+plot(mod1,main="precio dolar 2017",ylab="cierre",xlab="fecha")
+lines(dolar2$mean,col="purple")
+lines(mod1$mean,col="red")
+lines(mod2$mean,col="pink")
+lines(mod3$mean,col="blue")
+lines(mod4$mean,col="green")
+legend("bottomleft",lty=1,col=c("black","red","pink","blue","green","purple"),legend=c("normal","lineal holt","exponencial","aditivo","multiplicativo","real"))
