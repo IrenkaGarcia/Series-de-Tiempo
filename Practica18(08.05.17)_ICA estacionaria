@@ -1,0 +1,7 @@
+##generar una serie de tiempo con 252 datos de 2016 al 2017 ica
+require(foreign)
+require(fpp)
+ica<-read.csv("C:\\Users\\Sala-D\\Downloads\\ICA(1).csv")
+icast<-ts(ica,start=2016,frequency = 252)
+acf(icast)
+plot(icast)
