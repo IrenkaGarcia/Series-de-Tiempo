@@ -1,0 +1,73 @@
+require(foreign)
+require(fpp)
+bimbo<-read.csv("C:\\Users\\ACER\\Downloads\\BIMBO.csv")
+bimbost<-ts(bimbo,start=2016,frequency=252)
+cemex<-read.csv("C:\\Users\\ACER\\Downloads\\CEMEX.csv")
+cemexst<-ts(cemex,start=2016,frequency=252)
+##1).- revisar si nuestra base e sestacionaria
+##Aplicar la prueba de raiz unitaria a traves de la funcion 
+##adf.test y esperamos que el p.value sea menor a .05
+adf.test(bimbost)
+dbimts<-diff(bimbost)###difenciacion
+##diferenciacion con la funcion diff debido a que la serie no es estacionaria
+adf.test(dbimts)
+##debe salir error y esto idica que la p.value es menor a .05
+#que nuestra serie en su primera diferenciacion se convierte en estacionaria
+acf(dbimts)###q
+##los modelos de promedios moviles
+##para determinar el valor de p que se relaciona con los modelos autoregresivos se utiliza pacf()
+pacf(dbimts)
+#segun el correlograma el valor de p es 1
+#por lo que se propone un modelo ARIMA(1,2,2)
+modbim<-Arima(bimbost,order=c(1,1,2))##se utiliza la base original
+modbim
+###El valor AICC mientras menor sea, indica que es mejor modelo
+##sigma=ar1
+modbim1<-Arima(bimbost,order=c(2,1,2))
+modbim1
+##El de menor valor es el primer modelo que es modbim
+###aplicamos modelo para saber si los residuales tienen ruido blanco, 
+#porque es una de las caracteristicas
+modres<-residuals(modbim)
+Box.test(modres,lag=12, type="Ljung-Box")
+##nuestra p. value es grande y dice que los residuales son de ruido blanco
+mod1<-forecast(modbim,h=12)
+plot(forecast(modbim,h=12),include=18)
+##el include es que te muestre los ultimos 18 datos de tu serie
+summary(mod1)###valores MAE etc
+
+auto.arima(bimbost)
+modauto<-Arima(bimbost,order=c(2,1,2))
+modauto
+modres1<-residuals(modauto)
+Box.test(modres1,lag=12, type="Ljung-Box")
+##nuestra p. value es grande y dice que los residuales son de ruido blanco
+mod11<-forecast(modauto,h=12)
+plot(forecast(modauto,h=12),include=18)
+##el include es que te muestre los ultimos 18 datos de tu serie
+summary(mod11)###valores MAE etc
+
+
+####CEMEX
+adf.test(cemexst)
+dceme<-diff(cemexst)###difenciacion
+adf.test(dceme)
+acf(dceme)###q
+pacf(dceme)
+modce<-Arima(bimbost,order=c(0,1,1))##se utiliza la base original
+modce
+modres<-residuals(modce)
+Box.test(modres,lag=12, type="Ljung-Box")
+mod1<-forecast(modce,h=12)
+plot(forecast(modce,h=12),include=18)
+summary(mod1)
+
+auto.arima(cemexst)
+modcea<-Arima(bimbost,order=c(0,1,0))##se utiliza la base original
+modcea
+modres<-residuals(modcea)
+####Como podemos ver es mejor el modelo propuesto por auto.arima por el AICC que es menor
+Box.test(modres,lag=12, type="Ljung-Box")
+mod1<-forecast(modcea,h=12)
+plot(forecast(modcea,h=12),include=18)
+summary(mod1)
